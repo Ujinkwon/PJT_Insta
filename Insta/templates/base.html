@@ -30,7 +30,7 @@
 
   <div class="container bg-light">
     {% if user.is_authenticated %}
-      {% comment %} <a href="{% url 'accounts:profile' user.username %}">MY PROFILE</a> {% endcomment %}
+      <a href="{% url 'accounts:profile' user.username %}">MY PROFILE</a>
       <a href="{% url 'accounts:update' %}">정보수정</a>
       <form action="{% url 'accounts:logout' %}" method="POST">
         {% csrf_token %}
@@ -44,10 +44,9 @@
       <a href="{% url 'accounts:login' %}">Login</a>
       <a href="{% url 'accounts:signup' %}">Signup</a>
     {% endif %}
-
+  </div>
     {% block content %}
     {% endblock %}
-  </div>
   {% bootstrap_javascript %}
 </body>
 </html>

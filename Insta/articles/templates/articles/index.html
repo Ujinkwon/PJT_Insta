@@ -35,7 +35,7 @@
   <div class='d-flex justify-content-center p-50px bg-light'>
     {% for article in articles %}
     <div style='width: 550px;'>
-        <div class='border m-4'>
+        <div class='border m-4 bg-white'>
           <p><a href="{% url 'accounts:profile' article.author.username %}" class='m-3 text-dark text-decoration-none'>{{ article.author }}</a>
           </p>
           <img src="{{ article.image.url }}" alt="{{ article.image }}">
