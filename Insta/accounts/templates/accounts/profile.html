@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{{ person.username }}님의 프로필</h1>
+
+    <div>
+        <div>
+            팔로잉 : {{ person.followings.all|length }} 
+            (
+            {% for from_user in person.followings.all %}
+                {{ from_user }},
+            {% endfor %}
+            )
+            팔로워 : {{ person.followers.all|length }}
+            (
+            {% for to_user in person.followers.all %}
+                {{ to_user }},
+            {% endfor %}
+            )
+        </div>
+        {% if request.user != person %}
+            <div>
+                <form action="{% url 'accounts:follow' person.pk %}" method='POST'>
+                    {% csrf_token %}
+                    {% if request.user in person.followers.all %}
+                        {% comment %} <input type="submit" value='Unfollow'> {% endcomment %}
+                        <button type='submit' style='padding: 0; border: none; background: none;'><i type='submit' class="fa-solid fa-heart fa-3x" style='color: red;'></i></button>
+                    {% else %}
+                        {% comment %} <input type="submit" value='Follow'> {% endcomment %}
+                        <button type='submit' style='padding: 0; border: none; background: none;'> <i type='submit' class="fa-solid fa-heart fa-3x" style='color: black;'></i></button>
+                    {% endif %}
+                </form>
+            </div>
+        {% endif %}
+    </div>
+
+    <hr>
+    <h2>{{ person.username }}'s 게시글</h2>
+    {% for article in person.article_set.all %}
+        <div>{{ article.title }} - {{ article.like_users.all|length }}명이 좋아합니다.</div>
+    {% endfor %}
+    <hr>
+    <h2>{{ person.username }}'s 댓글</h2>
+    {% for comment in person.comment_set.all %}
+        <div>{{ comment.content }}</div>
+    {% endfor %}
+    <hr>
+    <h2>{{ person.username }}'s 좋아요한 게시글</h2></h2>
+    {% for article in person.like_articles.all %}
+        <div>{{ article.title }} - {{ article.like_users.all|length }}명이 좋아합니다.</div>
+    {% endfor %}
+    <hr>
+    <a href="{% url 'articles:index' %}">BACK</a>
+
+{% endblock content %}

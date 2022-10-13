@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <form action="" method="POST" class='border border-secondary p-5 border-opacity-25'>
+    {% csrf_token %}
+    <div class='d-flex justify-content-center mb-5'>
+    <img src="{% static 'accounts/instagram-new-logo.png' %}" alt="insta_logo" style='width: 350px;'>
+    </div>
+    {{ form.as_p }}
+    <button type='submit' class="btn btn-primary w-100">로그인</button>
+  </form>
+  <div class='border border-secondary p-4 mt-3 d-flex justify-content-center'>
+    계정이 없으신가요? 
+    <a href="{% url 'accounts:signup' %}" class='text-decoration-none'>가입하기</a>
+  </div>
+{% endblock content %}

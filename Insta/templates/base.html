@@ -1,0 +1,53 @@
+{% load bootstrap5 %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% bootstrap_css %}
+  <title>Document</title>
+  <script src="https://kit.fontawesome.com/95e6f7eceb.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg border-bottom">
+    <div class="container">
+      <img src="https://www.instagram.com/static/images/web/mobile_nav_type_logo-2x.png/1b47f9d0e595.png" alt="" style='height: 30px;'>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <input type="search" class='form-control' style='width: 200px' placeholder='Search'>
+      <div>
+        <a href="{% url 'accounts:profile' user.username %}" class='text-dark'><span class="fa-solid fa-house mx-1"></span></a>
+        <span class="fa-sharp fa-solid fa-paper-plane mx-1"></span>
+        <span class="fa-regular fa-square-plus mx-1"></span>
+        <span class="fa-regular fa-compass mx-1"></span>
+        <span class="fa-regular fa-heart mx-1"></span>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container bg-light">
+    {% if user.is_authenticated %}
+      {% comment %} <a href="{% url 'accounts:profile' user.username %}">MY PROFILE</a> {% endcomment %}
+      <a href="{% url 'accounts:update' %}">정보수정</a>
+      <form action="{% url 'accounts:logout' %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="Logout">
+      </form>
+      <form action="{% url 'accounts:delete' %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="회원탈퇴">
+      </form>
+    {% else %}
+      <a href="{% url 'accounts:login' %}">Login</a>
+      <a href="{% url 'accounts:signup' %}">Signup</a>
+    {% endif %}
+
+    {% block content %}
+    {% endblock %}
+  </div>
+  {% bootstrap_javascript %}
+</body>
+</html>
